@@ -30,19 +30,48 @@ public class NOAAWxObservation {
 	private AIRPORTSTATUSINFORMATION xmlDoc = null;
 	final static Logger logger = LoggerFactory.getLogger(NOAAWxObservation.class);
 
+	
+	/**
+
+    The NOAA weather observation for a specified airport.
+
+    This class holds information for the specified airport weather observation retrieved from NOAA.
+    */
 	public NOAAWxObservation() { }
 	
+	/**
+
+    Constructs a new NOAAWxObservation with the specified airport code.
+    @param airportCode the airport code for which to retrieve weather observation
+    */
 	public NOAAWxObservation(String airportCode) {
 		this.airportCode = airportCode;
 	}
 	
+	/**
+
+    Returns the airport code for which weather observation is being retrieved.
+    @return the airport code for which weather observation is being retrieved
+    */
 	public String getAirportCode() {
 		return airportCode;
 	}
 
+	/**
+
+    Sets the airport code for which to retrieve weather observation.
+    @param airportCode the airport code for which to retrieve weather observation
+    */
 	public void setAirportCode(String airportCode) {
 		this.airportCode = airportCode;
 	}
+	
+	/**
+
+    Retrieves the weather observation for the specified airport from the provided URL.
+    @param url the URL of the weather observation to retrieve
+    @return an Object containing the weather observation or an error message if an error occurred
+    */
 	
 	public Object getStatus(String url)  {
 		long startTime = 0;
@@ -81,8 +110,10 @@ public class NOAAWxObservation {
 		catch (MalformedURLException emalformed) {
 			logger.error(emalformed.getMessage(), emalformed);
 			return new String ("Error: URL"+url+" is malformed.");
-		}
-		catch (IOException eio) {
+		} catch (FileNotFoundException e) {
+	        logger.error(e.getMessage(), e);
+	        return new String("Error: airport code " + airportCode + " not found.");
+		} catch (IOException eio) {
 			logger.error(eio.getMessage(), eio);
 			return new String("Error: I/O error accessing URL "+url);
 		} catch (SAXNotRecognizedException e) {
