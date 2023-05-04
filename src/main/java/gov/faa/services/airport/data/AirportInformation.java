@@ -47,6 +47,6 @@ public class AirportInformation {
 	}
 	
 	public void setState (String airportState) {
-		this.city = airportState;
+		this.state = airportState;
 	}
 }
