@@ -81,8 +81,10 @@ public class NOAAWxObservation {
 		catch (MalformedURLException emalformed) {
 			logger.error(emalformed.getMessage(), emalformed);
 			return new String ("Error: URL"+url+" is malformed.");
-		}
-		catch (IOException eio) {
+		} catch (FileNotFoundException e) {
+	        logger.error(e.getMessage(), e);
+	        return new String("Error: airport code " + airportCode + " not found.");
+		} catch (IOException eio) {
 			logger.error(eio.getMessage(), eio);
 			return new String("Error: I/O error accessing URL "+url);
 		} catch (SAXNotRecognizedException e) {
